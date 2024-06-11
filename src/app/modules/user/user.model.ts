@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { Schema, model } from "mongoose";
 import { TUser } from "./user.interface";
 import { USER_ROLE } from "./user.constant";
+import bcryptjs from "bcryptjs";
+import config from "../../config";
 
 const userSchema = new Schema<TUser>(
   {
@@ -28,11 +31,27 @@ const userSchema = new Schema<TUser>(
     },
     role: {
       type: String,
-      required: [true, "role is required"],
       enum: Object.keys(USER_ROLE),
     },
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+  const user = this;
+
+  // hashing password
+  user.password = await bcryptjs.hash(
+    user?.password,
+    Number(config.bcrypt_salt_rounds)
+  );
+  next();
+});
+
+// set "" ofter saving password
+userSchema.post("save", async function (doc, next) {
+  doc.password = "";
+  next();
+});
 
 export const User = model<TUser>("User", userSchema);
