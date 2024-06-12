@@ -31,6 +31,7 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     role: {
       type: String,
+      required: true,
       enum: Object.keys(USER_ROLE),
     },
   },
