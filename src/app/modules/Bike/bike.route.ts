@@ -1,7 +1,15 @@
 import { Router } from "express";
-import { createBike, getAllBikes } from "./bike.controller";
+import {
+  createBike,
+  deleteBike,
+  getAllBikes,
+  updateBike,
+} from "./bike.controller";
 import validateRequest from "../../middleware/validateRequest";
-import { createBikeValidationSchema } from "./bike.validation";
+import {
+  createBikeValidationSchema,
+  updateBikeValidationSchema,
+} from "./bike.validation";
 import auth from "../../middleware/auth";
 import { USER_ROLE } from "../user/user.constant";
 
@@ -13,6 +21,16 @@ bikeRoutes.post(
   validateRequest(createBikeValidationSchema),
   createBike
 );
-bikeRoutes.get("/", getAllBikes)
+
+bikeRoutes.get("/", getAllBikes);
+
+bikeRoutes.put(
+  "/:id",
+  auth(USER_ROLE.admin),
+  validateRequest(updateBikeValidationSchema),
+  updateBike
+);
+
+bikeRoutes.delete("/:id", auth(USER_ROLE.admin), deleteBike);
 
 export default bikeRoutes;
