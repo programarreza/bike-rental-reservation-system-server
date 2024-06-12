@@ -1,17 +1,34 @@
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
-import { AuthService } from "./auth.service";
+import { AuthServices } from "./auth.service";
+import config from "../../config";
 
 const signup = catchAsync(async (req, res) => {
-  const result = await AuthService.signup(req.body);
+  const result = await AuthServices.signup(req.body);
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "user created successfully",
+    message: "User registration successfully",
     data: result,
   });
 });
 
-export { signup };
+const login = catchAsync(async (req, res) => {
+  const { accessToken, refreshToken } = await AuthServices.login(req.body);
+
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.NODE_ENV === "production",
+    httpOnly: true,
+  });
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User login successfully",
+    data: { accessToken },
+  });
+});
+
+export { signup, login };
