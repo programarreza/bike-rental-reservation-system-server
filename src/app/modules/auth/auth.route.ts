@@ -4,9 +4,9 @@ import { createUserValidationSchema } from "../user/user.validation";
 import { login, signup } from "./auth.controller";
 import { loginUserValidationSchema } from "./auth.validation";
 
-const userRoutes = Router();
+const authRoutes = Router();
 
-userRoutes.post("/signup", validateRequest(createUserValidationSchema), signup);
-userRoutes.post("/login", validateRequest(loginUserValidationSchema),login)
+authRoutes.post("/signup", validateRequest(createUserValidationSchema), signup);
+authRoutes.post("/login", validateRequest(loginUserValidationSchema), login);
 
-export default userRoutes;
+export default authRoutes;

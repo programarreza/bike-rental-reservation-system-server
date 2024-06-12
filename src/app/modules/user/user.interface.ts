@@ -5,6 +5,7 @@ import { USER_ROLE } from "./user.constant";
 export type TRole = "user" | "admin";
 
 export type TUser = {
+  _id: any;
   name: string;
   email: string;
   password: string;

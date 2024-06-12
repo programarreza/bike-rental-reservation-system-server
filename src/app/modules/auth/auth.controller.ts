@@ -10,13 +10,14 @@ const signup = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "User registration successfully",
+    message: "User registered successfully",
     data: result,
   });
 });
 
 const login = catchAsync(async (req, res) => {
-  const { accessToken, refreshToken } = await AuthServices.login(req.body);
+  const result = await AuthServices.login(req.body);
+  const { accessToken, refreshToken, user } = result;
 
   res.cookie("refreshToken", refreshToken, {
     secure: config.NODE_ENV === "production",
@@ -24,10 +25,11 @@ const login = catchAsync(async (req, res) => {
   });
 
   sendResponse(res, {
-    success: true,
     statusCode: httpStatus.OK,
-    message: "User login successfully",
-    data: { accessToken },
+    success: true,
+    message: "User logged in successfully",
+    token: accessToken,
+    data: user,
   });
 });
 
