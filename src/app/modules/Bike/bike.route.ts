@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createBike } from "./bike.controller";
+import { createBike, getAllBikes } from "./bike.controller";
 import validateRequest from "../../middleware/validateRequest";
 import { createBikeValidationSchema } from "./bike.validation";
 import auth from "../../middleware/auth";
@@ -13,5 +13,6 @@ bikeRoutes.post(
   validateRequest(createBikeValidationSchema),
   createBike
 );
+bikeRoutes.get("/", getAllBikes)
 
 export default bikeRoutes;
