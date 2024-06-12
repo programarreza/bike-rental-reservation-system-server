@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
-import { getUserProfileFromDB } from "./user.service";
+import { getUserProfileFromDB, updateUserProfileFromDB } from "./user.service";
 
 const getUserProfile = catchAsync(async (req, res) => {
   const { email } = req.user;
@@ -15,4 +15,16 @@ const getUserProfile = catchAsync(async (req, res) => {
   });
 });
 
-export { getUserProfile };
+const updateUserProfile = catchAsync(async (req, res) => {
+  const { email } = req.user;
+  const result = await updateUserProfileFromDB(email, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Profile updated successfully",
+    data: result,
+  });
+});
+
+export { getUserProfile, updateUserProfile };

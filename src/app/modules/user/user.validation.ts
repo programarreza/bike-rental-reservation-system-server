@@ -11,4 +11,12 @@ const createUserValidationSchema = z.object({
   }),
 });
 
-export { createUserValidationSchema };
+const updateUserValidationSchema = z.object({
+  body: z.object({
+    name: z.string().optional(),
+    phone: z.string().optional(),
+    address: z.string().optional(),
+  }),
+});
+
+export { createUserValidationSchema, updateUserValidationSchema };
