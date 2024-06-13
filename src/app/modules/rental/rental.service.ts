@@ -81,8 +81,6 @@ const updateReturnBikeIntoDB = async (id: string) => {
     const totalHour = adjustedTotalHours + adjustedTotalMinutes / 100; // combine adjusted hours and minutes into a decimal
     const totalCost = parseFloat((totalHour * pricePerHour).toFixed(2));
 
-    console.log({ pricePerHour, startTime, returnTime, totalHour, totalCost });
-
     // update rental bike booking (Transaction-2)
     const updatedRental = await Rental.findByIdAndUpdate(
       id,
@@ -112,4 +110,14 @@ const updateReturnBikeIntoDB = async (id: string) => {
   }
 };
 
-export { createRentalIntoDB, updateReturnBikeIntoDB };
+const getAllRentalsFromDB = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found!");
+  }
+
+  const result = await Rental.find({ userId: user?._id });
+  return result;
+};
+
+export { createRentalIntoDB, updateReturnBikeIntoDB, getAllRentalsFromDB };
