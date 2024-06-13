@@ -3,10 +3,10 @@ import cors from "cors";
 import express, { Application, Request, Response } from "express";
 import globalErrorHandler from "./app/middleware/globalErrorHandler";
 import notFound from "./app/middleware/notFound";
-import authRoutes from "./app/modules/auth/auth.route";
-import userRoutes from "./app/modules/user/user.route";
 import bikeRoutes from "./app/modules/Bike/bike.route";
+import authRoutes from "./app/modules/auth/auth.route";
 import rentalRoutes from "./app/modules/rental/rental.route";
+import userRoutes from "./app/modules/user/user.route";
 
 const app: Application = express();
 

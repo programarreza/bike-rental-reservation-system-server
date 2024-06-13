@@ -7,10 +7,6 @@ import { TLoginUser } from "./auth.interface";
 import { createToken } from "./auth.utils";
 
 const signup = async (payload: TUser) => {
-  const user = await User.findOne({ email: payload?.email });
-  if (user) {
-    throw new AppError(httpStatus.CONFLICT, "User is already exists");
-  }
 
   // create a user
   const newUser = await User.create(payload);
