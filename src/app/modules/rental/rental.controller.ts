@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
-import { createRentalIntoDB } from "./rental.service";
+import { createRentalIntoDB, updateReturnBikeIntoDB } from "./rental.service";
 
 const createRental = catchAsync(async (req, res) => {
   const { email } = req.user;
@@ -16,4 +16,17 @@ const createRental = catchAsync(async (req, res) => {
   });
 });
 
-export { createRental };
+const updateReturnBike = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await updateReturnBikeIntoDB(id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Bike returned successfully",
+    data: result,
+  });
+});
+
+export { createRental, updateReturnBike };
