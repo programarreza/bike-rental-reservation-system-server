@@ -38,6 +38,16 @@ const getAllRentals = catchAsync(async (req, res) => {
 
   const result = await getAllRentalsFromDB(email);
 
+  if (!result || result.length === 0) {
+    sendResponse(res, {
+      success: false,
+      statusCode: 404,
+      message: "No Data Found",
+      data: [],
+    });
+    return;
+  }
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -46,4 +56,4 @@ const getAllRentals = catchAsync(async (req, res) => {
   });
 });
 
-export { createRental, updateReturnBike, getAllRentals };
+export { createRental, getAllRentals, updateReturnBike };
