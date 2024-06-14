@@ -22,7 +22,7 @@ bikeRoutes.post(
   createBike
 );
 
-bikeRoutes.get("/", getAllBikes);
+bikeRoutes.get("/",auth(USER_ROLE.admin, USER_ROLE.user), getAllBikes);
 
 bikeRoutes.put(
   "/:id",
