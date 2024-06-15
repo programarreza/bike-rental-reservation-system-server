@@ -20,6 +20,6 @@ rentalRoutes.post(
 
 rentalRoutes.put("/:id/return", auth(USER_ROLE.admin), updateReturnBike);
 
-rentalRoutes.get("/", auth(USER_ROLE.user), getAllRentals);
+rentalRoutes.get("/", auth(USER_ROLE.user, USER_ROLE.admin), getAllRentals);
 
 export default rentalRoutes;

@@ -41,7 +41,6 @@ const getAllRentals = catchAsync(async (req, res) => {
   if (!result || result.length === 0) {
     sendResponse(res, {
       success: false,
-      statusCode: 404,
       message: "No Data Found",
       data: [],
     });
