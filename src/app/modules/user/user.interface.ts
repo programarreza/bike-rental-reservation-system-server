@@ -12,6 +12,7 @@ export type TUser = {
   password: string;
   phone: string;
   address: string;
+  image: string;
   role: TRole;
 };
 
@@ -24,4 +25,4 @@ export interface UserModel extends Model<TUser> {
   ): Promise<boolean>;
 }
 
-export type TUserRole = keyof typeof USER_ROLE
+export type TUserRole = keyof typeof USER_ROLE;

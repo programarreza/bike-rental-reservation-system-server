@@ -7,7 +7,8 @@ const createUserValidationSchema = z.object({
     password: z.string({ invalid_type_error: "password is required" }),
     phone: z.string({ invalid_type_error: "phone is required" }),
     address: z.string({ invalid_type_error: "address is required" }),
-    role: z.enum(["user", "admin"]),
+    image: z.string({ invalid_type_error: "image is required" }),
+    role: z.enum(["user", "admin"]).optional(),
   }),
 });
 

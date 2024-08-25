@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { Schema, model } from "mongoose";
-import { TUser, UserModel } from "./user.interface";
-import { USER_ROLE } from "./user.constant";
 import bcrypt from "bcrypt";
+import { Schema, model } from "mongoose";
 import config from "../../config";
+import { TUser, UserModel } from "./user.interface";
 
 const userSchema = new Schema<TUser, UserModel>(
   {
@@ -31,8 +30,11 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     role: {
       type: String,
-      required: true,
-      enum: Object.keys(USER_ROLE),
+      default: "user",
+    },
+    image: {
+      type: String,
+      require: true
     },
   },
   { timestamps: true }

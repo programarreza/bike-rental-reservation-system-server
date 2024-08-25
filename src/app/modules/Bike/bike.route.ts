@@ -23,7 +23,7 @@ bikeRoutes.post(
 );
 
 bikeRoutes.get("/",
-  auth(USER_ROLE.admin, USER_ROLE.user), 
+  // auth(USER_ROLE.admin, USER_ROLE.user), 
   getAllBikes);
 
 bikeRoutes.put(

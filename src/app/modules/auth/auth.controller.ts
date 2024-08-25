@@ -33,4 +33,17 @@ const login = catchAsync(async (req, res) => {
   });
 });
 
-export { signup, login };
+const refreshToken = catchAsync(async (req, res) => {
+  const { refreshToken } = req.cookies;
+  
+  const result = await AuthServices.refreshToken(refreshToken);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Refresh token is retrieved Successfully",
+    data: result,
+  });
+});
+
+export { signup, login, refreshToken };
