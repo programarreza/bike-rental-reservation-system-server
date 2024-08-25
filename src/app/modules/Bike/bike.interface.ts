@@ -6,5 +6,6 @@ export type TBike = {
   cc: number;
   year: number;
   model: string;
+  image: string;
   brand: string;
 };

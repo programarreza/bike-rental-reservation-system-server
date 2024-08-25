@@ -31,6 +31,10 @@ const bikeSchema = new Schema<TBike>(
       type: String,
       required: [true, "brand is require"],
     },
+    image: {
+      type: String,
+      required: [true, "image is require"],
+    },
     isAvailable: {
       type: Boolean,
       default: true,
