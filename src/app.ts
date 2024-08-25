@@ -7,6 +7,7 @@ import bikeRoutes from "./app/modules/Bike/bike.route";
 import authRoutes from "./app/modules/auth/auth.route";
 import rentalRoutes from "./app/modules/rental/rental.route";
 import userRoutes from "./app/modules/user/user.route";
+import contactRoutes from "./app/modules/contact/contact.route";
 
 const app: Application = express();
 
@@ -25,6 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/bikes", bikeRoutes);
 app.use("/api/rentals", rentalRoutes);
+app.use("/api/contacts", contactRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello bike-rental-reservation-system ");
