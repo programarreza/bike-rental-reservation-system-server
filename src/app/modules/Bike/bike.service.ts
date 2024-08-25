@@ -2,15 +2,30 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { TBike } from "./bike.interface";
 import { Bike } from "./bike.model";
+import QueryBuilder from "../../builder/QueryBuilder";
+import { bikeSearchableField } from "./bike.constant";
 
 const createBikeIntoDB = async (payload: TBike) => {
   const result = await Bike.create(payload);
   return result;
 };
 
-const getAllBikesFromDB = async () => {
-  const result = await Bike.find();
-  return result;
+const getAllBikesFromDB = async (query: Record<string, unknown>) => {
+
+  const bikeQuery = new QueryBuilder(Bike.find({isAvailable: true}), query)
+    .search(bikeSearchableField)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await bikeQuery.modelQuery;
+  const meta = await bikeQuery.countTotal();
+
+  return {
+    result,
+    meta,
+  };
 };
 
 const updateBikeIntoDB = async (id: string, payload: Partial<TBike>) => {
