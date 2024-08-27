@@ -11,8 +11,7 @@ const createBikeIntoDB = async (payload: TBike) => {
 };
 
 const getAllBikesFromDB = async (query: Record<string, unknown>) => {
-
-  const bikeQuery = new QueryBuilder(Bike.find({isAvailable: true}), query)
+  const bikeQuery = new QueryBuilder(Bike.find({ isAvailable: true }), query)
     .search(bikeSearchableField)
     .filter()
     .sort()
@@ -26,6 +25,11 @@ const getAllBikesFromDB = async (query: Record<string, unknown>) => {
     result,
     meta,
   };
+};
+
+const getSingleBikeFromDB = async (id: string) => {
+  const result = await Bike.findById(id);
+  return result;
 };
 
 const updateBikeIntoDB = async (id: string, payload: Partial<TBike>) => {
@@ -65,4 +69,5 @@ export {
   getAllBikesFromDB,
   updateBikeIntoDB,
   deleteBikeIntoDB,
+  getSingleBikeFromDB
 };
