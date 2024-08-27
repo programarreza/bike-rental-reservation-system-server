@@ -3,6 +3,7 @@ import {
   createBike,
   deleteBike,
   getAllBikes,
+  getSingleBikes,
   updateBike,
 } from "./bike.controller";
 import validateRequest from "../../middleware/validateRequest";
@@ -22,9 +23,17 @@ bikeRoutes.post(
   createBike
 );
 
-bikeRoutes.get("/",
-  // auth(USER_ROLE.admin, USER_ROLE.user), 
-  getAllBikes);
+bikeRoutes.get(
+  "/",
+  // auth(USER_ROLE.admin, USER_ROLE.user),
+  getAllBikes
+);
+
+bikeRoutes.get(
+  "/:id",
+  // auth(USER_ROLE.admin, USER_ROLE.user),
+  getSingleBikes
+);
 
 bikeRoutes.put(
   "/:id",
