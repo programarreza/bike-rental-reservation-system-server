@@ -10,7 +10,7 @@ const contactSchema = new Schema<TContact>(
     email: {
       type: String,
       required: [true, "email is required"],
-      unique: true,
+      unique: false,
     },
     phone: {
       type: String,

@@ -3,8 +3,8 @@ import AppError from "../../errors/AppError";
 import { User } from "./user.model";
 import { TUser } from "./user.interface";
 
-const getUserProfileFromDB = async (payload: string) => {
-  const result = await User.findOne({ email: payload });
+const getUserProfileFromDB = async (email: string) => {
+  const result = await User.findOne({ email: email });
 
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found !");

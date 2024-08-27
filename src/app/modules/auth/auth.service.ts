@@ -69,7 +69,7 @@ const refreshToken = async (token: string) => {
   // check if the given token is valid
   const decoded = verifyToken(token, config.jwt_refresh_secret as string);
 
-  const { email, iat } = decoded;
+  const { email} = decoded;
 
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(email);

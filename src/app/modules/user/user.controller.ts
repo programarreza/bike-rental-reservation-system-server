@@ -4,8 +4,8 @@ import sendResponse from "../../utils/sendResponse";
 import { getUserProfileFromDB, updateUserProfileFromDB } from "./user.service";
 
 const getUserProfile = catchAsync(async (req, res) => {
-  const { email } = req.user;
-  const result = await getUserProfileFromDB(email);
+  const { email } = req.query;
+  const result = await getUserProfileFromDB(email as string);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
