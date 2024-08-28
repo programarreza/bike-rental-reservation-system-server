@@ -81,9 +81,32 @@ const updateUserFromDB = async (id: string, payload: Partial<TUser>) => {
   return result;
 };
 
+const deleteUserFromDB = async (id: string) => {
+  const user = await User.findById(id);
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found !");
+  }
+
+  const result = await User.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "Failed to delete user ");
+  }
+
+  return result;
+};
+
 export {
   getUserProfileFromDB,
   updateUserProfileFromDB,
   getAllUserFromDB,
   updateUserFromDB,
+  deleteUserFromDB
 };

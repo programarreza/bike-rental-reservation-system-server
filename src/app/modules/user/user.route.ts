@@ -1,7 +1,13 @@
 import { Router } from "express";
 import auth from "../../middleware/auth";
 import { USER_ROLE } from "./user.constant";
-import { getAllUser, getUserProfile, updateUser, updateUserProfile } from "./user.controller";
+import {
+  deleteUser,
+  getAllUser,
+  getUserProfile,
+  updateUser,
+  updateUserProfile,
+} from "./user.controller";
 import validateRequest from "../../middleware/validateRequest";
 import { updateUserValidationSchema } from "./user.validation";
 
@@ -19,9 +25,11 @@ userRoutes.put(
 
 userRoutes.patch(
   "/:id",
-  auth( USER_ROLE.admin),
+  auth(USER_ROLE.admin),
   validateRequest(updateUserValidationSchema),
   updateUser
 );
+
+userRoutes.delete("/:id", auth(USER_ROLE.admin), deleteUser);
 
 export default userRoutes;

@@ -13,6 +13,7 @@ export type TUser = {
   phone: string;
   address: string;
   image: string;
+  isDeleted: boolean;
   role: TRole;
 };
 

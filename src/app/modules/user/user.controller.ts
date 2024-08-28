@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import {
+  deleteUserFromDB,
   getAllUserFromDB,
   getUserProfileFromDB,
   updateUserFromDB,
@@ -55,4 +56,16 @@ const updateUser = catchAsync(async (req, res) => {
   });
 });
 
-export { getUserProfile, updateUserProfile, getAllUser, updateUser };
+const deleteUser = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await deleteUserFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User deleted successfully",
+    data: result,
+  });
+});
+
+export { getUserProfile, updateUserProfile, getAllUser, updateUser, deleteUser };
