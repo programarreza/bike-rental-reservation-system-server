@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
-import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
-import {
-  createRentalIntoDB,
-  getAllRentalsFromDB,
-  updateReturnBikeIntoDB,
-} from "./rental.service";
-import { v4 as uuidv4 } from "uuid";
+import mongoose from "mongoose";
 import SSLCommerzPayment from "sslcommerz-lts";
+import { v4 as uuidv4 } from "uuid";
 import config from "../../config";
 import AppError from "../../errors/AppError";
-import { Rental } from "./rental.model";
-import mongoose from "mongoose";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
 import { Bike } from "../Bike/bike.model";
 import { User } from "../user/user.model";
+import { Rental } from "./rental.model";
+import {
+  createRentalIntoDB,
+  getMyRentalsFromDB,
+  updateReturnBikeIntoDB,
+} from "./rental.service";
 
 const createRental = catchAsync(async (req, res) => {
   const { email } = req.user;
@@ -180,11 +180,11 @@ const updateReturnBike = catchAsync(async (req, res) => {
   });
 });
 
-const getAllRentals = catchAsync(async (req, res) => {
+const getMyRentals = catchAsync(async (req, res) => {
   const { email } = req.user;
   const { isPaid } = req.query;
 
-  const result = await getAllRentalsFromDB(email, isPaid as string);
+  const result = await getMyRentalsFromDB(email, isPaid as string);
 
   if (!result || result.length === 0) {
     return sendResponse(res, {
@@ -204,8 +204,8 @@ const getAllRentals = catchAsync(async (req, res) => {
 
 export {
   createRental,
-  getAllRentals,
-  updateReturnBike,
-  paymentSuccess,
+  getMyRentals,
   paymentFail,
+  paymentSuccess,
+  updateReturnBike,
 };

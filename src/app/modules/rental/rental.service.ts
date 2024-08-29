@@ -96,7 +96,7 @@ const updateReturnBikeIntoDB = async (id: string) => {
   }
 };
 
-const getAllRentalsFromDB = async (email: string, isPaid: string) => {
+const getMyRentalsFromDB = async (email: string, isPaid: string) => {
   // Find the user by email
   const user = await User.findOne({ email });
   if (!user) {
@@ -112,4 +112,4 @@ const getAllRentalsFromDB = async (email: string, isPaid: string) => {
   return rentals;
 };
 
-export { createRentalIntoDB, updateReturnBikeIntoDB, getAllRentalsFromDB };
+export { createRentalIntoDB, updateReturnBikeIntoDB, getMyRentalsFromDB };
