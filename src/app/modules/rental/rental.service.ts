@@ -112,4 +112,10 @@ const getMyRentalsFromDB = async (email: string, isPaid: string) => {
   return rentals;
 };
 
-export { createRentalIntoDB, updateReturnBikeIntoDB, getMyRentalsFromDB };
+const getRentalsFromDB = async () => {
+
+  const rentals = await Rental.find({ isReturned: false }).populate("bikeId");
+  return rentals;
+};
+
+export { createRentalIntoDB, updateReturnBikeIntoDB, getMyRentalsFromDB, getRentalsFromDB };

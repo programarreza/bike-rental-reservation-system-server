@@ -5,6 +5,7 @@ import { USER_ROLE } from "../user/user.constant";
 import {
   createRental,
   getMyRentals,
+  getRentals,
   paymentFail,
   paymentSuccess,
   updateReturnBike,
@@ -23,6 +24,7 @@ rentalRoutes.post(
 rentalRoutes.put("/:id/return", auth(USER_ROLE.admin), updateReturnBike);
 
 rentalRoutes.get("/me", auth(USER_ROLE.user, USER_ROLE.admin), getMyRentals);
+rentalRoutes.get("/", auth(USER_ROLE.admin), getRentals);
 
 rentalRoutes.post("/payment/success/:tranId", paymentSuccess);
 rentalRoutes.post("/payment/fail/:tranId", paymentFail);

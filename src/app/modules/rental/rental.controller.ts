@@ -13,6 +13,7 @@ import { Rental } from "./rental.model";
 import {
   createRentalIntoDB,
   getMyRentalsFromDB,
+  getRentalsFromDB,
   updateReturnBikeIntoDB,
 } from "./rental.service";
 
@@ -202,10 +203,30 @@ const getMyRentals = catchAsync(async (req, res) => {
   });
 });
 
+const getRentals = catchAsync(async (req, res) => {
+  const result = await getRentalsFromDB();
+
+  if (!result || result.length === 0) {
+    return sendResponse(res, {
+      success: false,
+      message: "No Data Found",
+      data: [],
+    });
+  }
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Rentals retrieved successfully",
+    data: result,
+  });
+});
+
 export {
   createRental,
   getMyRentals,
   paymentFail,
   paymentSuccess,
   updateReturnBike,
+  getRentals
 };
