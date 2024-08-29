@@ -168,6 +168,30 @@ const paymentFail = catchAsync(async (req, res) => {
   });
 });
 
+
+const paymentClose = catchAsync(async (req, res) => {
+  const { tranId } = req.params;
+
+  // Find the rental by transaction ID
+  const rental = await Rental.findOne({ transactionId: tranId });
+  if (!rental) {
+    throw new AppError(httpStatus.NOT_FOUND, "Rental not found!");
+  }
+
+  // Delete the rental entry as the payment has failed
+  const result = await Rental.deleteOne({ transactionId: tranId });
+  if (result.deletedCount) {
+    // Redirect the user to a failure page
+    return res.redirect(`http://localhost:5173/payment/cancel/${tranId}`);
+  }
+
+  return sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Rental record deleted successfully due to payment failure",
+  });
+});
+
 const updateReturnBike = catchAsync(async (req, res) => {
   const { id } = req.params;
 
@@ -228,5 +252,6 @@ export {
   paymentFail,
   paymentSuccess,
   updateReturnBike,
-  getRentals
+  getRentals,
+  paymentClose
 };

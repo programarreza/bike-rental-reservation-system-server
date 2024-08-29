@@ -6,6 +6,7 @@ import {
   createRental,
   getMyRentals,
   getRentals,
+  paymentClose,
   paymentFail,
   paymentSuccess,
   updateReturnBike,
@@ -28,5 +29,6 @@ rentalRoutes.get("/", auth(USER_ROLE.admin), getRentals);
 
 rentalRoutes.post("/payment/success/:tranId", paymentSuccess);
 rentalRoutes.post("/payment/fail/:tranId", paymentFail);
+rentalRoutes.post("/payment/cancel/:tranId", paymentClose);
 
 export default rentalRoutes;
