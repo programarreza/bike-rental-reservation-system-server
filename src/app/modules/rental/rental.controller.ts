@@ -182,8 +182,9 @@ const updateReturnBike = catchAsync(async (req, res) => {
 
 const getAllRentals = catchAsync(async (req, res) => {
   const { email } = req.user;
+  const { isPaid } = req.query;
 
-  const result = await getAllRentalsFromDB(email);
+  const result = await getAllRentalsFromDB(email, isPaid as string);
 
   if (!result || result.length === 0) {
     return sendResponse(res, {

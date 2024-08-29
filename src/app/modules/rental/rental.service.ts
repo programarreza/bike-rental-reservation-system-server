@@ -13,29 +13,9 @@ const createRentalIntoDB = async (email: string, payload: TRental) => {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
   }
 
-  //  set user id from user token
-  // payload.userId = user?._id;
-
-  // // find bike and update isAvailable status false
-  // const bikeStatus = await Bike.findByIdAndUpdate(
-  //   { _id: payload?.bikeId },
-  //   { isAvailable: false },
-  //   { new: true, runValidators: true }
-  // );
-
-  // if (!bikeStatus) {
-  //   throw new AppError(
-  //     httpStatus.BAD_REQUEST,
-  //     "failed to bike available status update "
-  //   );
-  // }
-
   const result = Rental.create(payload);
-    if (!result) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      "failed to create bike rent"
-    );
+  if (!result) {
+    throw new AppError(httpStatus.BAD_REQUEST, "failed to create bike rent");
   }
   return result;
 };
@@ -116,14 +96,20 @@ const updateReturnBikeIntoDB = async (id: string) => {
   }
 };
 
-const getAllRentalsFromDB = async (email: string) => {
+const getAllRentalsFromDB = async (email: string, isPaid: string) => {
+  // Find the user by email
   const user = await User.findOne({ email });
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
   }
 
-  const result = await Rental.find({ userId: user?._id });
-  return result;
+  // Find the rentals based on the query and populate bike information
+  const rentals = await Rental.find({
+    userId: user._id,
+    isPaid: isPaid,
+  }).populate("bikeId");
+
+  return rentals;
 };
 
 export { createRentalIntoDB, updateReturnBikeIntoDB, getAllRentalsFromDB };
