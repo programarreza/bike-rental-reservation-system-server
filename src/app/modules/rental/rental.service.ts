@@ -113,9 +113,15 @@ const getMyRentalsFromDB = async (email: string, isPaid: string) => {
 };
 
 const getRentalsFromDB = async () => {
-
-  const rentals = await Rental.find({ isReturned: false }).populate("bikeId");
+  const rentals = await Rental.find({ isReturned: false })
+    .populate("bikeId")
+    .populate("userId");
   return rentals;
 };
 
-export { createRentalIntoDB, updateReturnBikeIntoDB, getMyRentalsFromDB, getRentalsFromDB };
+export {
+  createRentalIntoDB,
+  updateReturnBikeIntoDB,
+  getMyRentalsFromDB,
+  getRentalsFromDB,
+};
