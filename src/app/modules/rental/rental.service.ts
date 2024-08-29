@@ -14,23 +14,29 @@ const createRentalIntoDB = async (email: string, payload: TRental) => {
   }
 
   //  set user id from user token
-  payload.userId = user?._id;
+  // payload.userId = user?._id;
 
-  // find bike and update isAvailable status false
-  const bikeStatus = await Bike.findByIdAndUpdate(
-    { _id: payload?.bikeId },
-    { isAvailable: false },
-    { new: true, runValidators: true }
-  );
+  // // find bike and update isAvailable status false
+  // const bikeStatus = await Bike.findByIdAndUpdate(
+  //   { _id: payload?.bikeId },
+  //   { isAvailable: false },
+  //   { new: true, runValidators: true }
+  // );
 
-  if (!bikeStatus) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      "failed to bike available status update "
-    );
-  }
+  // if (!bikeStatus) {
+  //   throw new AppError(
+  //     httpStatus.BAD_REQUEST,
+  //     "failed to bike available status update "
+  //   );
+  // }
 
   const result = Rental.create(payload);
+    if (!result) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "failed to create bike rent"
+    );
+  }
   return result;
 };
 

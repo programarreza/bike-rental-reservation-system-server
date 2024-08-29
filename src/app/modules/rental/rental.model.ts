@@ -18,11 +18,28 @@ const rentalSchema = new Schema<TRental>({
   },
   returnTime: {
     type: Date,
-    default: null
+    default: null,
   },
   totalCost: {
     type: Number,
     default: 0,
+  },
+  transactionId: {
+    type: String,
+    required: true,
+  },
+  advanced: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  isAdvanced: {
+    type: Boolean,
+    default: false,
+  },
+  isPaid: {
+    type: Boolean,
+    default: false,
   },
   isReturned: {
     type: Boolean,
