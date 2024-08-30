@@ -1,12 +1,19 @@
 import { Response } from "express";
 
+type TPagination = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPage: number;
+};
+
 type TResponse<T> = {
   statusCode?: number;
   success: boolean;
   message?: string;
   token?: string;
   data?: T;
-  meta?: T;
+  meta?: TPagination; // Adjusted to use TPagination type
 };
 
 const sendResponse = <T>(res: Response, data: TResponse<T>) => {
