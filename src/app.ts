@@ -13,27 +13,14 @@ import userRoutes from "./app/modules/user/user.route";
 const app: Application = express();
 
 // middleware
-// app.use(express.json());
-// app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: ["https://neon-sundae-b1b78a.netlify.app", "http://localhost:5173"],
-//     credentials: true,
-//   })
-// );
-
+app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "https://neon-sundae-b1b78a.netlify.app",
-    ],
+    origin: ["https://neon-sundae-b1b78a.netlify.app", "http://localhost:5173"],
     credentials: true,
   })
 );
-app.use(express.json());
-app.use(cookieParser());
 
 // application route
 app.use("/api/auth", authRoutes);
