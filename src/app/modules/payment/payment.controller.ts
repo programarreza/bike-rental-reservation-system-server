@@ -22,6 +22,12 @@ const createPayment = catchAsync(async (req, res) => {
   // Generate a unique transaction ID
   const tranID = rentTranInfo?.transactionId;
 
+  // Calculate the total cost
+  let totalCost = rentTranInfo?.totalCost;
+
+  if (rentTranInfo?.isAdvanced) {
+    totalCost = rentTranInfo?.totalCost - rentTranInfo?.advanced;
+  }
   //  Initiate payment
   const sslcz = new SSLCommerzPayment(
     config.store_id,
@@ -30,7 +36,7 @@ const createPayment = catchAsync(async (req, res) => {
   );
 
   const paymentData = {
-    total_amount: rentTranInfo?.totalCost, // Use the advanced payment amount
+    total_amount: totalCost, // Use the advanced payment amount
     currency: "BDT",
     tran_id: tranID,
     success_url: `${config.base_url}/api/payments/payment/success/${tranID}`,
@@ -87,12 +93,19 @@ const paymentComplete = catchAsync(async (req, res) => {
     throw new AppError(httpStatus.NOT_FOUND, "Rental not found!");
   }
 
+    // Calculate the total cost
+    let totalCost = rental.totalCost;
+
+    if (rental.isAdvanced) {
+      totalCost = rental.totalCost - rental.advanced;
+    }
+
   // Mark the payment as successful and the bike as rented
   rental.isPaid = true;
   await rental.save();
 
   if (rental.isPaid) {
-    const paymentUrl = `http://localhost:5173/payment/success/${tranId}?amount=${rental.totalCost}&date=${new Date().toISOString()}`;
+    const paymentUrl = `http://localhost:5173/payment/success/${tranId}?amount=${totalCost}&date=${new Date().toISOString()}`;
 
     return res.redirect(paymentUrl);
   }
