@@ -127,7 +127,7 @@ const paymentSuccess = catchAsync(async (req, res) => {
     await session.endSession();
 
     if (rental.isAdvanced) {
-      const paymentUrl = `http://localhost:5173/payment/success/${tranId}?amount=${rental.advanced}&date=${new Date().toISOString()}`;
+      const paymentUrl = `${config.client_url}/payment/success/${tranId}?amount=${rental.advanced}&date=${new Date().toISOString()}`;
 
       return res.redirect(paymentUrl);
     }
@@ -158,7 +158,7 @@ const paymentFail = catchAsync(async (req, res) => {
   const result = await Rental.deleteOne({ transactionId: tranId });
   if (result.deletedCount) {
     // Redirect the user to a failure page
-    return res.redirect(`http://localhost:5173/payment/failed/${tranId}`);
+    return res.redirect(`${config.client_url}/payment/failed/${tranId}`);
   }
 
   return sendResponse(res, {
@@ -182,7 +182,7 @@ const paymentClose = catchAsync(async (req, res) => {
   const result = await Rental.deleteOne({ transactionId: tranId });
   if (result.deletedCount) {
     // Redirect the user to a failure page
-    return res.redirect(`http://localhost:5173/payment/cancel/${tranId}`);
+    return res.redirect(`${config.client_url}/payment/cancel/${tranId}`);
   }
 
   return sendResponse(res, {

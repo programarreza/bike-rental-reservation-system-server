@@ -16,5 +16,6 @@ export default {
   store_id: process.env.STORE_ID,
   store_pass: process.env.STORE_PASS,
   is_live: false,
-  base_url: process.env.BASE_URL
+  base_url: process.env.BASE_URL,
+  client_url: process.env.CLIENT_URL,
 };

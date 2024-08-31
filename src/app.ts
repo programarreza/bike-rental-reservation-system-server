@@ -17,7 +17,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://neon-sundae-b1b78a.netlify.app", "http://localhost:5173"],
+    origin: [
+      "https://bikerentalclient-md-shafikul-islams-projects.vercel.app",
+      "http://localhost:5173",
+    ],
     credentials: true,
   })
 );
